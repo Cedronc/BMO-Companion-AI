@@ -39,9 +39,7 @@ available_functions = {
   'launch_firefox': launch_firefox,
 }
 
-while True:
-  print("\n")
-  userInput = input("Enter Prompt...")
+def talk(userInput: str):
   messages = [
       {
           'role': 'user',

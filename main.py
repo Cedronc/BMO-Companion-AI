@@ -1,9 +1,9 @@
 import speech_recognition as sr
-import datetime
-import json
 import os
 import random
 import TTSEngine
+from AIEngine import talk
+from srTest import listen_until_speech
 
 class BMOAssistant:
     def __init__(self):
@@ -42,6 +42,7 @@ class BMOAssistant:
         self.greeting()
 
 
+# TODO add diary
 # Additional utility functions
 def create_bmo_diary():
     """Create a simple diary file for BMO to remember things"""
@@ -55,18 +56,14 @@ if not os.path.exists("bmo_diary.txt"):
 
 if __name__ == "__main__":
     print("Initializing BMO...")
-    create_bmo_diary()
 
     bmo = BMOAssistant()
     bmo.greeting()
     bmo.ttsEngine.speak(bmo.greeting())
 
+
     # For text-based testing (comment out for voice-only)
-    print("\nTest commands: time, joke, game, weather, sleep")
     while True:
-        user_input = input("\nYou: ").strip()
-        if user_input.lower() == 'q':
-            break
-        if user_input:
-            print('not implemented')
+        res = listen_until_speech()
+        talk(res)
 

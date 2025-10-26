@@ -1,5 +1,4 @@
 import speech_recognition as sr
-import whisper
 
 
 def listen_until_speech():
