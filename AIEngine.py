@@ -3,17 +3,17 @@ from ollama import chat
 from ollama import ChatResponse
 import subprocess
 
-def launch_firefox() -> str:
+def launch_firefox(url: str) -> str:
   """
   Launch a firefox window with a specific URL.
 
   Args: 
-    Nothing
+    url: a string for the destination website.
 
   Returns:
     Nothing
   """
-  subprocess.run(['start', 'firefox', 'jellyfin.boel-mongool-9.dev'], shell=True)
+  subprocess.run(['start', 'firefox', url], shell=True)
   # TODO: return a func that chats with bmo again or some other voice line.
   return "Yipie movie time"
 
@@ -84,6 +84,7 @@ while True:
       # if call.function.name == 'get_temperature':
       #     result = get_temperature(**call.function.arguments)
       func = available_functions[call.function.name]
+      print(func)
       if func != None:
         result = func(**call.function.arguments)
       else:
