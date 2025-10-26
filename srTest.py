@@ -1,6 +1,7 @@
 import speech_recognition as sr
 
 
+# this shit is borked
 def listen_until_speech():
     r = sr.Recognizer()
     

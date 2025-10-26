@@ -90,3 +90,7 @@ def talk(userInput: str):
           messages.append({'role': 'tool', 'tool_name': call.function.name, 'content': result})
       print('\nFunction Result:')
       print(result)
+
+def __main__():
+   while True:
+      talk(input())
