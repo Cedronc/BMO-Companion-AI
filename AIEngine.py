@@ -1,6 +1,22 @@
 # model="HuggingFaceH4/zephyr-7b-beta",
 from ollama import chat
 from ollama import ChatResponse
+import subprocess
+
+def launch_firefox() -> str:
+  """
+  Launch a firefox window with a specific URL.
+
+  Args: 
+    Nothing
+
+  Returns:
+    Nothing
+  """
+  subprocess.run(['start', 'firefox', 'jellyfin.boel-mongool-9.dev'], shell=True)
+  # TODO: return a func that chats with bmo again or some other voice line.
+  return "Yipie movie time"
+
 
 def get_temperature(city: str) -> str:
   """Get the current temperature for a city
@@ -20,6 +36,7 @@ def get_temperature(city: str) -> str:
 
 available_functions = {
   'get_temperature': get_temperature,
+  'launch_firefox': launch_firefox,
 }
 
 while True:
@@ -51,7 +68,6 @@ while True:
         in_thinking = False
       print(chunk.message.content, end='')
 
-      # Old
     if chunk.message.content:
         print(chunk.message.content, end='', flush=True)
         # accumulate the partial content
@@ -65,19 +81,13 @@ while True:
       messages.append({'role': 'assistant', 'content': content, 'tool_calls': tool_calls})
 
   for call in tool_calls:
-      if call.function.name == 'get_temperature':
-          result = get_temperature(**call.function.arguments)
+      # if call.function.name == 'get_temperature':
+      #     result = get_temperature(**call.function.arguments)
+      func = available_functions[call.function.name]
+      if func != None:
+        result = func(**call.function.arguments)
       else:
           result = 'Unknown tool'
           messages.append({'role': 'tool', 'tool_name': call.function.name, 'content': result})
       print('\nFunction Result:')
       print(result)
-
-# new_messages = [{ 'role': 'assistant', thinking: thinking, content: content }]
-# response = chat(model='BMO', stream=True, messages=new_messages)
-
-# for chunk in response:
-#   if chunk.message.content:
-#     print(chunk.message.content, end='', flush=True)
-#     # accumulate the partial content
-#     content += chunk.message.content
