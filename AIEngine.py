@@ -80,10 +80,7 @@ def talk(userInput: str):
       messages.append({'role': 'assistant', 'content': content, 'tool_calls': tool_calls})
 
   for call in tool_calls:
-      # if call.function.name == 'get_temperature':
-      #     result = get_temperature(**call.function.arguments)
       func = available_functions[call.function.name]
-      print(func)
       if func != None:
         result = func(**call.function.arguments)
       else:
