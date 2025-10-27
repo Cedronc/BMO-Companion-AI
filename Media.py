@@ -1,6 +1,6 @@
 import keyboard
 ##Media keys are used to hopefully cover both windows and linux (even macos?)
-def media_control(media_key: str, steps: int = 1):
+def media_control(media_key: str, steps: int = 2):
     """
     Create media control functions at runtime,
     Params:
@@ -12,15 +12,18 @@ def media_control(media_key: str, steps: int = 1):
         'volume down',
         'volume mute'
         And must be a string (str)
-    steps optional param for how many volume up's or down's to execute default is 1 (int)
+    steps optional param for how many volume up's or down's to execute the lowest value is 2(int)
     returns nothing
     """
-    print(steps//2)
+    steps = steps if steps > 1 else 2
+    print(steps)
     match media_key:
         case 'volume up' | 'volume down':
-            for i in range((steps//2) - 1):
-                print(i)
-                keyboard.send(media_key)
+            for i in range(steps // 2):
+                try:
+                    keyboard.send(media_key)
+                except Exception as e:
+                    print(f"Error: {e}")
         case 'unmute volume' | 'volume unmute':
             keyboard.send('volume mute')
         case _:
