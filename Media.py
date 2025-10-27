@@ -1,6 +1,8 @@
 import keyboard
 import time
 
+##Media keys are used to hopefully cover both windows and linux (even macos?)
+
 def media_keys() -> tuple:
     return {
         'play_pause': 'play/pause media',
