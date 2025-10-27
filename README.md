@@ -10,4 +10,4 @@ run `ollama create BMO -f BMO.Modelfile`
 
 
 # TODO
-- [ ] fzf for speech recognition
+- [ ] Keep old messages in memory

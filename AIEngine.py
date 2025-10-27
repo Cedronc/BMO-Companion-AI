@@ -2,6 +2,8 @@
 from ollama import chat
 from ollama import ChatResponse
 import subprocess
+from Media import skip_song, play_pause
+
 
 def launch_firefox(url: str) -> str:
   """
@@ -37,6 +39,8 @@ def get_temperature(city: str) -> str:
 available_functions = {
   'get_temperature': get_temperature,
   'launch_firefox': launch_firefox,
+  'skip_song': skip_song,
+  'play_pause': play_pause
 }
 
 def talk(userInput: str):
