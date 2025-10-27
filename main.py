@@ -1,9 +1,7 @@
-import speech_recognition as sr
 import os
 import random
 import TTSEngine
 from AIEngine import talk
-from srTest import listen_until_speech
 import simpleaudio as sa
 
 def playAudio(filePath: str):

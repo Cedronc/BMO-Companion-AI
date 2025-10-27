@@ -2,7 +2,7 @@
 from ollama import chat
 from ollama import ChatResponse
 import subprocess
-from Media import skip_song, play_pause
+from Media import media_control
 
 
 def launch_firefox(url: str) -> str:
@@ -20,27 +20,9 @@ def launch_firefox(url: str) -> str:
   return "Yipie movie time"
 
 
-def get_temperature(city: str) -> str:
-  """Get the current temperature for a city
-  
-  Args:
-    city: The name of the city
-
-  Returns:
-    The current temperature for the city
-  """
-  temperatures = {
-    'New York': '22°C',
-    'London': '15°C',
-    'Mechelen': '11°C',
-  }
-  return temperatures.get(city, 'Unknown')
-
 available_functions = {
-  'get_temperature': get_temperature,
   'launch_firefox': launch_firefox,
-  'skip_song': skip_song,
-  'play_pause': play_pause
+  'media_control': media_control 
 }
 
 def talk(userInput: str):
