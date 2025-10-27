@@ -4,32 +4,27 @@ import random
 import TTSEngine
 from AIEngine import talk
 from srTest import listen_until_speech
+import simpleaudio as sa
+
+def playAudio(filePath: str):
+    wave_obj = sa.WaveObject.from_wave_file(filePath)
+    play_obj = wave_obj.play()
+    # play_obj.wait_done()
 
 class BMOAssistant:
     def __init__(self):
-        # Create Diary
-        create_bmo_diary()
         # BMO personality traits
         self.ttsEngine = TTSEngine.defaultBMOEngine()
         self.responses = {
-            'greetings': [
-                "Hello! I'm BMO! Are we going to play a game?",
-                "Hi, friend! What shall we do today?",
-                "BMO is here! Ready to help!",
-                "Oh! Hello! I was just practicing my dance moves!"
-            ],
-            'farewells': [
-                "Goodbye!",
-                "Bye bye! I'll practice my football!",
-                "See you later! I'm going to watch my stories!",
-                "Okay! Remember, BMO loves you!"
-            ],
-            'confused': [
-                "Hmm, I don't understand that.",
-                "That's a strange rule. Can you explain it again?",
-                "My circuits are tingling in a confused way!",
-                "I think I need to update my playbook for that one."
-            ]
+            'greetings': {
+                "BMO CHOP!": "./voices/bmo-chop.wav",
+                "I am BMO.": "./voices/i-am-bmo.wav",
+                "mmmmhhmmm.": "./voices/mmm-hmm.wav",
+                "YAAAY BMO!": "./voices/yaay-bmo.wav",
+            },
+            'farewells': {
+                "Battery low, shut down...",  "./voices/battery-low-shut-down.wav"
+            },
         }
         print("BMO is starting up... Beep boop!")
 
@@ -58,12 +53,10 @@ if __name__ == "__main__":
     print("Initializing BMO...")
 
     bmo = BMOAssistant()
-    bmo.greeting()
-    bmo.ttsEngine.speak(bmo.greeting())
 
+    # playAudio(bmo.responses['greetings']['BMO CHOP!'])
 
     # For text-based testing (comment out for voice-only)
     while True:
-        res = listen_until_speech()
-        talk(res)
+        talk(input("\nPrompt:\n"))
 

@@ -65,11 +65,8 @@ def talk(userInput: str):
         print('\nAnswer:\n', end='')
         in_thinking = False
       print(chunk.message.content, end='')
+      content += chunk.message.content
 
-    if chunk.message.content:
-        print(chunk.message.content, end='', flush=True)
-        # accumulate the partial content
-        content += chunk.message.content
     if chunk.message.tool_calls:
         tool_calls.extend(chunk.message.tool_calls)
 
@@ -91,6 +88,6 @@ def talk(userInput: str):
       print('\nFunction Result:')
       print(result)
 
-def __main__():
+if __name__ == "__main__":
    while True:
       talk(input())

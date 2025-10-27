@@ -1,6 +1,5 @@
 import speech_recognition as sr
 
-
 # this shit is borked
 def listen_until_speech():
     r = sr.Recognizer()
@@ -36,7 +35,3 @@ def listen_until_speech():
         except Exception as e:
             print(f"❌ Unexpected error: {e}")
             continue
-
-# Usage
-result = listen_until_speech()
-print(f"Final result: {result}")
