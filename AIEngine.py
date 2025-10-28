@@ -2,7 +2,7 @@
 from ollama import chat
 from ollama import ChatResponse
 import subprocess
-from Media import media_control
+from src.Media import media_control
 
 
 def launch_firefox(url: str) -> str:
@@ -25,16 +25,16 @@ available_functions = {
   'media_control': media_control 
 }
 
+messages = [ ]
 def talk(userInput: str):
-  messages = [
-      {
-          'role': 'user',
-          'content': userInput,
-      },
-  ]
+  messages.append({
+      'role': 'user',
+      'content': userInput,
+    })
+
+  print(messages)
 
   response: ChatResponse = chat(model='BMO', tools=available_functions.values(), stream=True, messages=messages, think=True)
-
 
   content = ''
   tool_calls = []
@@ -55,7 +55,6 @@ def talk(userInput: str):
 
     if chunk.message.tool_calls:
         tool_calls.extend(chunk.message.tool_calls)
-
 
   # append accumulated fields to the messages
   if content or tool_calls:
