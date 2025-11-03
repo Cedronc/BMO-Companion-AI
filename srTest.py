@@ -9,16 +9,16 @@ def listen_until_speech():
             with sr.Microphone() as source:
                 print("🎤 Listening... Speak now!")
                 # Adjust for ambient noise each time
-                r.adjust_for_ambient_noise(source, duration=0.5)
+                r.adjust_for_ambient_noise(source, duration=0.2)
                 
                 # Listen with longer timeout
-                audio = r.listen(source, timeout=10, phrase_time_limit=8)
+                audio = r.listen(source, timeout=100, phrase_time_limit=8)
                 
             print("🔄 Processing...")
             text = r.recognize_google(audio)
             
             if text.strip():  # If we got non-empty text
-                print(f"✅ Recognized: {text}")
+                print(f"User: {text}")
                 return text
             else:
                 print("🔁 Heard something but couldn't understand. Trying again...")
@@ -35,3 +35,5 @@ def listen_until_speech():
         except Exception as e:
             print(f"❌ Unexpected error: {e}")
             continue
+
+listen_until_speech()
