@@ -8,8 +8,10 @@ def listen_until_speech():
     
     while True:
         try:
-            result = model.transcribe(r.listen(sr.Microphone))
-            print(result)
+            with sr.Microphone() as source:
+                print("listening...")
+                audio = r.listen(source, timeout=100, phrase_time_limit=8)
+                print(audio)
 
         except sr.WaitTimeoutError:
             print("⏰ No speech detected. Still listening...")

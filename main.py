@@ -1,7 +1,11 @@
 import os
 import random
 import TTSEngine
+# Generating tokens
 from AIEngine import talk
+# listening for audio
+from GoogleVoiceProcessing import listen_until_speech
+# playing audio
 import simpleaudio as sa
 
 def playAudio(filePath: str):

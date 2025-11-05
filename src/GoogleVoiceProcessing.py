@@ -1,39 +1,31 @@
 import speech_recognition as sr
+# TODO: Make return class with status and text
 
-# this shit is borked
-def listen_until_speech():
+def listen_until_speech() -> str:
     r = sr.Recognizer()
-    
-    while True:
-        try:
-            with sr.Microphone() as source:
-                print("🎤 Listening... Speak now!")
-                # Adjust for ambient noise each time
-                r.adjust_for_ambient_noise(source, duration=0.2)
-                
-                # Listen with longer timeout
-                audio = r.listen(source, timeout=100, phrase_time_limit=8)
-                
-            print("🔄 Processing...")
-            text = r.recognize_google(audio)
+    try:
+        with sr.Microphone() as source:
+            print("🎤 Listening... Speak now!")
+            # Adjust for ambient noise each time
+            r.adjust_for_ambient_noise(source, duration=0.2)
+            # Listen with no sentence limit
+            audio = r.listen(source, timeout=200)
             
-            if text.strip():  # If we got non-empty text
-                print(f"User: {text}")
-                return text
-            else:
-                print("🔁 Heard something but couldn't understand. Trying again...")
-                
-        except sr.WaitTimeoutError:
-            print("⏰ No speech detected. Still listening...")
-            continue
-        except sr.UnknownValueError:
-            print("🔁 Could not understand audio. Try speaking again...")
-            continue
-        except sr.RequestError as e:
-            print(f"❌ API error: {e}")
-            continue
-        except Exception as e:
-            print(f"❌ Unexpected error: {e}")
-            continue
+        print("[P]rocessing...")
+        text = r.recognize_google(audio)
+        
+        if text.strip():  # If we got non-empty text
+            print(f"User: {text}")
+            return text
+        else:
+            print("Could not understand")
+            return "Could not understand"
+            
+    except sr.UnknownValueError:
+        print("🔁 Could not understand audio. Try speaking again...")
+    except sr.RequestError as e:
+        print(f"❌ API error: {e}")
+    except Exception as e:
+        print(f"❌ Unexpected error: {e}")
 
 listen_until_speech()
