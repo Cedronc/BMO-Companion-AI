@@ -1,31 +1,47 @@
 import os
 import random
-import TTSEngine
+# Text to Speech
+from src.TTSEngine import makeEngine, speak
 # Generating tokens
-from AIEngine import talk
+from src.AIEngine import talk
 # listening for audio
-from GoogleVoiceProcessing import listen_until_speech
-# playing audio
-import simpleaudio as sa
+from src.GoogleVoiceProcessing import listen_until_speech
+# playing audio files
+from just_playback import Playback
+import threading
 
-def playAudio(filePath: str):
-    wave_obj = sa.WaveObject.from_wave_file(filePath)
-    play_obj = wave_obj.play()
-    # play_obj.wait_done()
+def playAudio(filename): 
+    playback = Playback()
+    playback.load_file(filename)
+    playback.set_volume(1)
+    playback.loop_at_end(False)
+    playback.play()
+    print(playback.volume())
+
+# def playAudio(filename):
+#     """Play audio in a separate thread"""
+#     def _play():
+#         wave_obj = sa.WaveObject.from_wave_file(filename)
+#         wave_obj.play()
+    
+#     # TODO: look at the api for this cuz i got no clue if the thread is reused or not.
+#     thread = threading.Thread(target=_play)
+#     thread.daemon = True  # Thread will close when main program closes
+#     thread.start()
+#     return thread
 
 class BMOAssistant:
     def __init__(self):
         # BMO personality traits
-        self.ttsEngine = TTSEngine.defaultBMOEngine()
         self.responses = {
             'greetings': {
-                "BMO CHOP!": "./voices/bmo-chop.wav",
-                "I am BMO.": "./voices/i-am-bmo.wav",
-                "mmmmhhmmm.": "./voices/mmm-hmm.wav",
-                "YAAAY BMO!": "./voices/yaay-bmo.wav",
+                "bmo_chop": "./voices/bmo-chop.wav",
+                "i_am_bmo": "./voices/i-am-bmo.wav",
+                "mhm": "./voices/mmm-hmm.wav",
+                "yay_bmo": "./voices/yaay-bmo.wav",
             },
             'farewells': {
-                "Battery low, shut down...",  "./voices/battery-low-shut-down.wav"
+                "battery_low_shut_down",  "./voices/battery-low-shut-down.wav"
             },
         }
         print("BMO is starting up... Beep boop!")
@@ -56,9 +72,10 @@ if __name__ == "__main__":
 
     bmo = BMOAssistant()
 
-    # playAudio(bmo.responses['greetings']['BMO CHOP!'])
+    playAudio(bmo.responses['greetings']['bmo_chop'])
 
     # For text-based testing (comment out for voice-only)
     while True:
+        listen_until_speech()
         talk(input("\nPrompt:\n"))
 

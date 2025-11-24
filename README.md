@@ -10,3 +10,4 @@ run `ollama create BMO -f BMO.Modelfile`
 # TODO
 - [ ] Keep old messages in memory, or make persistant
 - [ ] Remember / keep track of stuff
+- [ ] Dockerize with GPU passthru

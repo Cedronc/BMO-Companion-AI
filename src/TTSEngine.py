@@ -1,18 +1,20 @@
 import pyttsx3
+#import piper
+#from piper import PiperVoice
+# TODO: port to piper-tts
  
-class BMO_TTSEngine:
-    def __init__(self, engine = None):
-        if engine == None:
-            self.engine = pyttsx3.init()
-        else:
-            self.engine = engine
+def makeEngine():
+    engine = pyttsx3.init()
 
-    def speak(self, text: str) -> None:
-        self.engine.say(text)
+    # Configure for more BMO-like qualities
+    voices = engine.getProperty('voices')
+    engine.setProperty('rate', 180)  # Faster speed = more energetic
+    engine.setProperty('volume', 0.8) 
+    engine.setProperty('pitch', 110)  # Higher pitch = more childlike
 
-
-def defaultBMOEngine() -> BMO_TTSEngine:
-    return BMO_TTSEngine()
+def speak(engine, text: str) -> None:
+    engine.say(text)
+    engine.runAndWait()
 
 
 if __name__ == "__main__":
