@@ -1,11 +1,12 @@
 import os
 import random
+import sys
 # Text to Speech
 from src.TTSEngine import makeEngine, speak
 # Generating tokens
 from src.AIEngine import talk
 # listening for audio
-from src.GoogleVoiceProcessing import listen_until_speech
+# from src.GoogleVoiceProcessing import listen_until_speech
 # playing audio files
 from just_playback import Playback
 import threading
@@ -16,7 +17,7 @@ def playAudio(filename):
     playback.set_volume(1)
     playback.loop_at_end(False)
     playback.play()
-    print(playback.volume())
+    # print(playback.volume())
 
 # def playAudio(filename):
 #     """Play audio in a separate thread"""
@@ -35,13 +36,13 @@ class BMOAssistant:
         # BMO personality traits
         self.responses = {
             'greetings': {
-                "bmo_chop": "./voices/bmo-chop.wav",
-                "i_am_bmo": "./voices/i-am-bmo.wav",
-                "mhm": "./voices/mmm-hmm.wav",
-                "yay_bmo": "./voices/yaay-bmo.wav",
+                "bmo_chop": "./voices/bmo-chop.mp3",
+                "i_am_bmo": "./voices/i-am-bmo.mp3",
+                "mhm": "./voices/mmm-hmm.mp3",
+                "yay_bmo": "./voices/yaay-bmo.mp3",
             },
             'farewells': {
-                "battery_low_shut_down",  "./voices/battery-low-shut-down.wav"
+                "battery_low_shut_down",  "./voices/battery-low-shut-down.mp3"
             },
         }
         print("BMO is starting up... Beep boop!")
@@ -70,12 +71,13 @@ if not os.path.exists("bmo_diary.txt"):
 if __name__ == "__main__":
     print("Initializing BMO...")
 
+
     bmo = BMOAssistant()
 
     playAudio(bmo.responses['greetings']['bmo_chop'])
 
     # For text-based testing (comment out for voice-only)
     while True:
-        listen_until_speech()
+        # listen_until_speech()
         talk(input("\nPrompt:\n"))
 
